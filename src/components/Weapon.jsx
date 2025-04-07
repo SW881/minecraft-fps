@@ -146,6 +146,7 @@ const Weapon = (props) => {
             const recoilAnimation = initRecoilAnimation();
             recoilAnimation.start(); // Start the recoil animation
 
+            // Raycasting using Rapier Physics and Shoot bullets using TWEEN
             if (world) {
                 // Camera position and direction
                 const cameraPosition = camera.position.clone();
