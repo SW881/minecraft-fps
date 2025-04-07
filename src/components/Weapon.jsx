@@ -140,6 +140,7 @@ const Weapon = (props) => {
         return twRecoilAnimation; // Return recoil animation to be triggered
     };
 
+
     // Trigger recoil animation when shooting starts
     const startShooting = () => {
         if (bullets >= 0) {
