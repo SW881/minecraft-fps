@@ -218,48 +218,6 @@ const Weapon = (props) => {
                 } else {
                     console.log("No hit detected.");
                 }
-
-
-
-
-
-                // if (hit) {
-
-                // console.log({ hit })
-                // const hitPoint = new THREE.Vector3(
-                //     cameraPosition.x + cameraDirection.x * hit.timeOfImpact,
-                //     cameraPosition.y + cameraDirection.y * hit.timeOfImpact,
-                //     cameraPosition.z + cameraDirection.z * hit.timeOfImpact
-                // );
-
-                // console.log("Hit Point:", hitPoint);
-
-                // const hitMarker = new THREE.Mesh(
-                //     new THREE.SphereGeometry(0.05),
-                //     new THREE.MeshBasicMaterial({ color: 0xff0000 })
-                // );
-
-                // hitMarker.position.copy(cameraPosition);
-                // scene.add(hitMarker);
-
-                // const shootAnimation = new TWEEN.Tween(cameraPosition)
-                //     .to({ x: hitPoint.x, y: hitPoint.y, z: hitPoint.z }, 100)
-                //     .easing(TWEEN.Easing.Quadratic.Out)
-                //     .yoyo(true)
-                //     .duration(100)
-                //     .onUpdate(() => {
-                //         hitMarker.position.copy(cameraPosition);
-                //     })
-                //     .onComplete(() => {
-                //         console.log("Bullet hit at:", hitPoint);
-                //         scene.remove(hitMarker);
-                //     })
-                //     .start();
-
-                // groupRef.current.add(shootAnimation);
-                // } else {
-                //     console.log("No hit detected.");
-                // }
             } else {
                 console.error("Rapier world is not initialized.");
             }
