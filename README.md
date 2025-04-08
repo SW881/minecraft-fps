@@ -4,9 +4,7 @@
 * Rendering Dust 2 Map
 * Rendering Gun with Player as capsule collider
 
-
 ### 2. Character Controller
-
 * Move Forward, Backward, Sideways, Jump, Crouch
 
 ### 3. Lights and Sun with shadows
