@@ -12,17 +12,19 @@ const recoilDuration = 100;
 const easing = TWEEN.Easing.Quadratic.Out;
 
 const Weapon = (props) => {
+    const physicsRayCast = true;
     const { camera, scene } = useThree();
     const [isShooting, setIsShooting] = useState(false);
     const [gunPosition, setGunPosition] = useState([0.14, -0.18, 0.65]);
     const [gunRotation, setGunRotation] = useState([0, 1.5, 0]);
     const weaponRef = useRef();
     const recolRef = useRef();
+
+
     const groupRef = useRef(new TWEEN.Group()); // Create a group for managing tweens
     const [recoilAmount, setRecoilAmount] = useState(0.5);
     let { reload } = usePersonControls();
     const [bullets, setBullets] = useState(10000);
-    const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2(1, 1);
     const rapier = useRapier();
     const world = rapier.world;
@@ -140,55 +142,106 @@ const Weapon = (props) => {
         return twRecoilAnimation; // Return recoil animation to be triggered
     };
 
+
     // Trigger recoil animation when shooting starts
     const startShooting = () => {
         if (bullets >= 0) {
             const recoilAnimation = initRecoilAnimation();
             recoilAnimation.start(); // Start the recoil animation
 
-            if (world) {
-                // Camera position and direction
-                const cameraPosition = camera.position.clone();
-                const cameraDirection = new THREE.Vector3();
-                camera.getWorldDirection(cameraDirection);
+            // Raycasting using Rapier Physics and Shoot bullets using TWEEN
+            if (physicsRayCast) {
+                if (world) {
+                    // Camera position and direction
+                    const cameraPosition = camera.position.clone();
+                    const cameraDirection = new THREE.Vector3();
+                    camera.getWorldDirection(cameraDirection);
 
-                // Convert Three.js vectors to Rapier vectors
-                const rayOrigin = new RAPIER.Vector3(
-                    cameraPosition.x,
-                    cameraPosition.y,
-                    cameraPosition.z
-                );
-
-                // Normalize using Rapier's Vector3
-                const rayDirection = new RAPIER.Vector3(
-                    cameraDirection.x * 500,
-                    cameraDirection.y * 500,
-                    cameraDirection.z * 500,
-                );
-
-                const maxToi = 500; // Maximum Time of Impact
-                const solid = true; // Detect only solid objects
-                const ray = new RAPIER.Ray(rayOrigin, rayDirection);
-
-                const hit = world.castRay(ray, maxToi, false); // Perform the raycast
-
-                if (hit) {
-                    console.log("Hit Detected:", hit.timeOfImpact);
-                    const hitPoint = new THREE.Vector3(
-                        rayOrigin.x + rayDirection.x * hit.timeOfImpact,
-                        rayOrigin.y + rayDirection.y * hit.timeOfImpact,
-                        rayOrigin.z + rayDirection.z * hit.timeOfImpact
+                    // Convert Three.js vectors to Rapier vectors
+                    const rayOrigin = new RAPIER.Vector3(
+                        cameraPosition.x,
+                        cameraPosition.y,
+                        cameraPosition.z
                     );
 
+                    // Normalize using Rapier's Vector3
+                    const rayDirection = new RAPIER.Vector3(
+                        cameraDirection.x * 500,
+                        cameraDirection.y * 500,
+                        cameraDirection.z * 500,
+                    );
+
+                    const maxToi = 500; // Maximum Time of Impact
+                    const solid = true; // Detect only solid objects
+                    const ray = new RAPIER.Ray(rayOrigin, rayDirection);
+
+                    const hit = world.castRay(ray, maxToi, false); // Perform the raycast
+
+                    if (hit) {
+                        console.log("Hit Detected:", hit.timeOfImpact);
+                        const hitPoint = new THREE.Vector3(
+                            rayOrigin.x + rayDirection.x * hit.timeOfImpact,
+                            rayOrigin.y + rayDirection.y * hit.timeOfImpact,
+                            rayOrigin.z + rayDirection.z * hit.timeOfImpact
+                        );
+
+                        console.log("Hit Point:", hitPoint);
+
+                        // Optional: Add hit marker
+                        const hitMarker = new THREE.Mesh(
+                            new THREE.SphereGeometry(0.05),
+                            new THREE.MeshToonMaterial({ color: 0xff0000 })
+                        );
+                        hitMarker.position.copy(hitPoint);
+                        scene.add(hitMarker);
+
+                        // Start position: Camera position
+                        const startPosition = camera.position.clone();
+                        hitMarker.position.copy(startPosition);
+                        console.log({ startPosition })
+
+                        // Add marker to the scene
+                        scene.add(hitMarker);
+
+                        // Animation: Move from camera to hit point
+                        const shootAnimation = new TWEEN.Tween(startPosition)
+                            .to({ x: hitPoint.x, y: hitPoint.y, z: hitPoint.z }, 100)
+                            .easing(TWEEN.Easing.Quadratic.Out)
+                            .yoyo(true)
+                            .duration(100)
+                            .onUpdate(() => {
+                                hitMarker.position.copy(startPosition);
+                            }).onComplete(() => {
+                                console.log("Bullet hit at:", hitPoint);
+                                //     // Optional: Remove marker after hit
+                                // scene.remove(hitMarker);
+                            }).start();
+
+                        groupRef.current.add(shootAnimation); // Add recoil animation to group
+
+                        setBullets((prev) => prev - 1);
+                    } else {
+                        console.log("No hit detected.");
+                    }
+                } else {
+                    console.error("Rapier world is not initialized.");
+                }
+
+                setBullets((prev) => prev - 1);
+            } else {
+                const raycaster = new THREE.Raycaster();
+                raycaster.setFromCamera(new THREE.Vector2(0, 0), camera); // From camera center
+                const intersections = raycaster.intersectObjects(scene.children);
+
+                if (intersections.length > 0) {
+                    const hitPoint = intersections[0].point;
                     console.log("Hit Point:", hitPoint);
 
-                    // Optional: Add hit marker
+                    // Create the hit marker (bullet)
                     const hitMarker = new THREE.Mesh(
                         new THREE.SphereGeometry(0.05),
-                        new THREE.MeshToonMaterial({ color: 0xff0000 })
+                        new THREE.MeshBasicMaterial({ color: 0xff0000 })
                     );
-                    hitMarker.position.copy(hitPoint);
-                    scene.add(hitMarker);
 
                     // Start position: Camera position
                     const startPosition = camera.position.clone();
@@ -214,103 +267,12 @@ const Weapon = (props) => {
 
                     groupRef.current.add(shootAnimation); // Add recoil animation to group
 
-                    setBullets((prev) => prev - 1);
                 } else {
                     console.log("No hit detected.");
                 }
 
-
-
-
-
-                // if (hit) {
-
-                // console.log({ hit })
-                // const hitPoint = new THREE.Vector3(
-                //     cameraPosition.x + cameraDirection.x * hit.timeOfImpact,
-                //     cameraPosition.y + cameraDirection.y * hit.timeOfImpact,
-                //     cameraPosition.z + cameraDirection.z * hit.timeOfImpact
-                // );
-
-                // console.log("Hit Point:", hitPoint);
-
-                // const hitMarker = new THREE.Mesh(
-                //     new THREE.SphereGeometry(0.05),
-                //     new THREE.MeshBasicMaterial({ color: 0xff0000 })
-                // );
-
-                // hitMarker.position.copy(cameraPosition);
-                // scene.add(hitMarker);
-
-                // const shootAnimation = new TWEEN.Tween(cameraPosition)
-                //     .to({ x: hitPoint.x, y: hitPoint.y, z: hitPoint.z }, 100)
-                //     .easing(TWEEN.Easing.Quadratic.Out)
-                //     .yoyo(true)
-                //     .duration(100)
-                //     .onUpdate(() => {
-                //         hitMarker.position.copy(cameraPosition);
-                //     })
-                //     .onComplete(() => {
-                //         console.log("Bullet hit at:", hitPoint);
-                //         scene.remove(hitMarker);
-                //     })
-                //     .start();
-
-                // groupRef.current.add(shootAnimation);
-                // } else {
-                //     console.log("No hit detected.");
-                // }
-            } else {
-                console.error("Rapier world is not initialized.");
+                setBullets((prev) => prev - 1);
             }
-
-            setBullets((prev) => prev - 1);
-
-            /*
-            const raycaster = new THREE.Raycaster();
-            raycaster.setFromCamera(new THREE.Vector2(0, 0), camera); // From camera center
-            const intersections = raycaster.intersectObjects(scene.children);
-    
-            if (intersections.length > 0) {
-                const hitPoint = intersections[0].point;
-                console.log("Hit Point:", hitPoint);
-    
-                // Create the hit marker (bullet)
-                const hitMarker = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.05),
-                    new THREE.MeshBasicMaterial({ color: 0xff0000 })
-                );
-    
-                // Start position: Camera position
-                const startPosition = camera.position.clone();
-                hitMarker.position.copy(startPosition);
-                console.log({ startPosition })
-    
-                // Add marker to the scene
-                scene.add(hitMarker);
-    
-                // Animation: Move from camera to hit point
-                const shootAnimation = new TWEEN.Tween(startPosition)
-                    .to({ x: hitPoint.x, y: hitPoint.y, z: hitPoint.z }, 100)
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .yoyo(true)
-                    .duration(100)
-                    .onUpdate(() => {
-                        hitMarker.position.copy(startPosition);
-                    }).onComplete(() => {
-                        console.log("Bullet hit at:", hitPoint);
-                        //     // Optional: Remove marker after hit
-                        // scene.remove(hitMarker);
-                    }).start();
-    
-                groupRef.current.add(shootAnimation); // Add recoil animation to group
-    
-            } else {
-                console.log("No hit detected.");
-            }
-    
-            setBullets((prev) => prev - 1);
-            */
         }
     };
 
