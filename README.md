@@ -13,6 +13,10 @@
 * Rendering Lights for the lamps 
 * Rendering Sun with normalBias and offest
 
+### 4. Raycasting for bullet shooting
+* Raycasting using THREE Js
+* Raycasting using RAPIER Physics
+
 
 
 

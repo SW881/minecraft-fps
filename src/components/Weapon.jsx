@@ -19,8 +19,6 @@ const Weapon = (props) => {
     const [gunRotation, setGunRotation] = useState([0, 1.5, 0]);
     const weaponRef = useRef();
     const recolRef = useRef();
-
-
     const groupRef = useRef(new TWEEN.Group()); // Create a group for managing tweens
     const [recoilAmount, setRecoilAmount] = useState(0.5);
     let { reload } = usePersonControls();
