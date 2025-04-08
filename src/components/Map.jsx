@@ -4,6 +4,7 @@ import { Decal, useGLTF, useTexture } from '@react-three/drei'
 export default function Model(props) {
     const { nodes, materials } = useGLTF('/scene.gltf');
     const texture = useTexture('/2557.jpg')
+
     return (
         <group {...props} dispose={null} scale={100}>
             <group rotation={[-Math.PI / 2, 0, 0]}>
@@ -12,142 +13,108 @@ export default function Model(props) {
                     receiveShadow
                     geometry={nodes.Object_2.geometry}
                     material={materials.Lantern}
-                // onPointerOver={(e) => console.log(e)}
-                // onPointerMove={(e) => console.log('Pointer moved in Lantern')}
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_3.geometry}
                     material={materials.Purpur_Slab}
-                // onPointerMove={(e) => console.log('Pointer moved in Purpur_Slab')}
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_4.geometry}
                     material={materials.Torch}
-                // onPointerMove={(e) => console.log('Pointer moved in Torch')}
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_5.geometry}
                     material={materials.Sea_Pickle}
-                // onPointerMove={(e) => console.log('Pointer moved in Sea_Pickle')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_6.geometry}
                     material={materials.Glass_Pane}
-                // onPointerMove={(e) => console.log('Pointer moved in Glass_Pane')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_7.geometry}
                     material={materials.Polished_Blackstone_Stairs}
-                // onPointerMove={(e) => console.log('Pointer moved in Polished_Blackstone_Stairs')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_8.geometry}
                     material={materials.Stained_Glass_Pane}
-                // onPointerMove={(e) => console.log('Pointer moved in Stained_Glass_Pane')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_9.geometry}
                     material={materials.Smooth_Sandstone_Stairs}
-                // onPointerMove={(e) => console.log('Pointer moved in Smooth_Sandstone_Stairs')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_10.geometry}
                     material={materials.Smooth_Sandstone_Stairs}
-                // onPointerMove={(e) => console.log('Pointer moved in Smooth_Sandstone_Stairs')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_11.geometry}
                     material={materials.Green_Glazed_Terracotta}
-                // onPointerMove={(e) => console.log('Pointer moved in Green_Glazed_Terracotta')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_12.geometry}
                     material={materials.Green_Glazed_Terracotta}
-                // onPointerMove={(e) => console.log('Pointer moved in Green_Glazed_Terracotta')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_13.geometry}
                     material={materials.Smooth_Sandstone_Stairs_0}
-                // onPointerMove={(e) => console.log('Pointer moved in Smooth_Sandstone_Stairs_0')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_14.geometry}
                     material={materials.Smooth_Sandstone_Stairs_0}
-                // onPointerMove={(e) => console.log('Pointer moved in Smooth_Sandstone_Stairs_0')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_15.geometry}
                     material={materials.Smooth_Sandstone_Stairs_0}
-                // onPointerMove={(e) => console.log('Pointer moved in Smooth_Sandstone_Stairs_0')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_16.geometry}
                     material={materials.Smooth_Sandstone_Stairs_0}
-                // onPointerMove={(e) => console.log('Pointer moved in Smooth_Sandstone_Stairs_0')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_17.geometry}
                     material={materials.Smooth_Sandstone_Stairs_0}
-                // onPointerMove={(e) => console.log('Pointer moved in Smooth_Sandstone_Stairs_0')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_18.geometry}
                     material={materials.Smooth_Sandstone_Stairs_0}
-                // onPointerMove={(e) => console.log('Pointer moved in Smooth_Sandstone_Stairs_0')}
-
                 />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Object_19.geometry}
                     material={materials.Concrete}
-                // onPointerMove={(e) => console.log('Pointer moved in Smooth_Sandstone_Stairs_0')}
-
                 />
                 <mesh
                     castShadow

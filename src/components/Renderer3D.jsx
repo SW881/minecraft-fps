@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Physics } from '@react-three/rapier';
 import { Environment, OrbitControls, PointerLockControls, Stats } from '@react-three/drei';
 import * as THREE from "three";
+import { BallCollider, CuboidCollider, RigidBody, useRapier } from "@react-three/rapier";
 
 import Ground from './Ground';
 import Player from './Player';
@@ -35,7 +36,6 @@ const Renderer3D = () => {
           </Physics>
 
           <Physics gravity={[0, -40, 0]} colliders={false}>
-            {/* <Bullets /> */}
             <Elements />
             <Player />
             <Ground />

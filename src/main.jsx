@@ -8,7 +8,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <div>
       <div id="aim"></div>
-      <div id="bullets">30/30</div>
+      <div id="bullets">10000/10000</div>
       <App />
     </div>
   </StrictMode>,
