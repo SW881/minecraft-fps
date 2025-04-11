@@ -17,8 +17,6 @@ const Weapon = (props) => {
     const [isShooting, setIsShooting] = useState(false);
     const [gunPosition, setGunPosition] = useState([0.14, -0.18, 0.65]);
     const [gunRotation, setGunRotation] = useState([0, 1.5, 0]);
-    const weaponRef = useRef();
-    const recolRef = useRef();
     const groupRef = useRef(new TWEEN.Group()); // Create a group for managing tweens
     const [recoilAmount, setRecoilAmount] = useState(0.5);
     let { reload } = usePersonControls();
@@ -26,6 +24,8 @@ const Weapon = (props) => {
     const mouse = new THREE.Vector2(1, 1);
     const rapier = useRapier();
     const world = rapier.world;
+    const weaponRef = useRef();
+    const recolRef = useRef();
 
     // Mouse events to trigger shooting state
     useEffect(() => {
