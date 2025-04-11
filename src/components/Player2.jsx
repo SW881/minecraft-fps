@@ -15,7 +15,7 @@ let runAudio = new Audio('/player_walk.mp3');
 
 // sunLight.shadow.normalBias = 0.2;
 
-const Player = () => {
+const Player2 = () => {
     const { camera } = useThree();
     const playerRef = useRef();
     const objectInHandRef = useRef();
@@ -76,7 +76,7 @@ const Player = () => {
         }
 
         const { x, y, z } = playerRef.current.translation();
-        state.camera.position.set(x, y, z);
+        state.camera.position.set(x, y + 1, z);
 
         if (crouch) {
             setMoveSpeed(8);
@@ -100,7 +100,7 @@ const Player = () => {
 
     return (
         <>
-            <RigidBody position={[-114, 50, -24.16]} ref={playerRef} lockRotations
+            <RigidBody position={[-114, 50, -30]} ref={playerRef} lockRotations
                 onCollisionEnter={(other) => {
                     if (other.rigidBodyObject.name === "ground") {
                         // console.log('Rigid Body Object :', other.rigidBodyObject)
@@ -117,9 +117,19 @@ const Player = () => {
                     }
                 }}
             >
-                <mesh castShadow receiveShadow>
+                {/* <mesh castShadow receiveShadow>
                     <capsuleGeometry args={[1, playerHeight, 10, 20]} />
                     <CapsuleCollider args={[1, playerHeight]} friction={0} />
+                    <meshStandardMaterial color="yellow" />
+                </mesh> */}
+
+                <mesh castShadow receiveShadow>
+                    {/* CapsuleGeometry: radius, length, capSegments, radialSegments */}
+                    <capsuleGeometry args={[1, 2, 8, 16]} />
+
+                    {/* CapsuleCollider: halfHeight, radius */}
+                    <CapsuleCollider args={[1, 1]} />
+
                     <meshStandardMaterial color="blue" />
                 </mesh>
             </RigidBody>
@@ -132,4 +142,4 @@ const Player = () => {
     )
 }
 
-export default Player
+export default Player2

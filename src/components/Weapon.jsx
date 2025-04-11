@@ -15,7 +15,7 @@ const Weapon = (props) => {
     const physicsRayCast = true;
     const { camera, scene } = useThree();
     const [isShooting, setIsShooting] = useState(false);
-    const [gunPosition, setGunPosition] = useState([0.14, -0.18, 0.65]);
+    const [gunPosition, setGunPosition] = useState([0.14, -0.2, 0.65]);
     const [gunRotation, setGunRotation] = useState([0, 1.5, 0]);
     const groupRef = useRef(new TWEEN.Group()); // Create a group for managing tweens
     const [recoilAmount, setRecoilAmount] = useState(0.5);

@@ -4,12 +4,12 @@ import { Physics } from '@react-three/rapier';
 import { Environment, OrbitControls, PointerLockControls, Stats } from '@react-three/drei';
 import * as THREE from "three";
 import { BallCollider, CuboidCollider, RigidBody, useRapier } from "@react-three/rapier";
-
+import Player1 from './Player1';
 import Ground from './Ground';
-import Player from './Player';
 import Elements from './Elements';
 import { Bloom, DepthOfField, EffectComposer, FXAA, Noise, SSAO, Vignette } from '@react-three/postprocessing';
 import { DirectionalLightHelper } from 'three/src/Three.Core.js';
+import Player2 from './Player2';
 
 const shadowOffset = 250;
 
@@ -25,7 +25,7 @@ const Renderer3D = () => {
           {/* <DepthOfField focusDistance={0} focalLength={2} bokehScale={2} height={1080} /> */}
           {/* <Bloom intensity={0.5} luminanceThreshold={0.3} luminanceSmoothing={0.9} />          <Noise opacity={0.02} /> */}
           {/* <Vignette eskil={false} offset={0.1} darkness={1.1} /> */}
-          <FXAA opacity={100} />
+          {/* <FXAA opacity={100} /> */}
         </EffectComposer>
         <Stats />
         <PointerLockControls />
@@ -37,7 +37,8 @@ const Renderer3D = () => {
 
           <Physics gravity={[0, -40, 0]} colliders={false}>
             <Elements />
-            <Player />
+            <Player1 />
+            <Player2 />
             <Ground />
           </Physics>
 
