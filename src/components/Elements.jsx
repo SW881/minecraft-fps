@@ -81,14 +81,14 @@ const Elements = () => {
     const [hovered, hover] = useState(null)
 
 
-    // scene.add(light1);
-    // scene.add(light2);
-    // scene.add(light3);
-    // scene.add(light4);
-    // scene.add(light5);
-    // scene.add(light6);
-    // scene.add(light7);
-    // scene.add(light8);
+    scene.add(light1);
+    scene.add(light2);
+    scene.add(light3);
+    scene.add(light4);
+    scene.add(light5);
+    scene.add(light6);
+    scene.add(light7);
+    scene.add(light8);
     scene.add(light9);
 
     useFrame(() => {
