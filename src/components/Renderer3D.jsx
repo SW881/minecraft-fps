@@ -21,12 +21,6 @@ const Renderer3D = () => {
         style={{ height: "100vh", backgroundColor: "lightblue" }} // Minecraft sky color
         gl={{ maxLights: 100, antialias: true, precision: 'high' }}
       >
-        <EffectComposer>
-          {/* <DepthOfField focusDistance={0} focalLength={2} bokehScale={2} height={1080} /> */}
-          {/* <Bloom intensity={0.5} luminanceThreshold={0.3} luminanceSmoothing={0.9} />          <Noise opacity={0.02} /> */}
-          {/* <Vignette eskil={false} offset={0.1} darkness={1.1} /> */}
-          {/* <FXAA opacity={100} /> */}
-        </EffectComposer>
         <Stats />
         <PointerLockControls />
         <Suspense>
@@ -37,7 +31,7 @@ const Renderer3D = () => {
 
           <Physics gravity={[0, -40, 0]} colliders={false}>
             <Elements />
-            <Player1 />
+            {/* <Player1 /> */}
             <Player2 />
             <Ground />
           </Physics>
