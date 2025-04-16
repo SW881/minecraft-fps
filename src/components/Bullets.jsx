@@ -29,7 +29,7 @@ const Bullets = () => {
             <mesh castShadow receiveShadow>
                 <sphereGeometry args={[0.5, 32, 32]} />
                 <meshPhongMaterial color="green" />
-                <BallCollider args={[0.5, 0.5, 0.5]} friction={0} />
+                <BallCollider args={[0.5, 0.5, 0.5]} />
             </mesh>
         </RigidBody>
     )
