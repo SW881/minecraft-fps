@@ -15,6 +15,15 @@
 * Raycasting using THREE Js
 * Raycasting using RAPIER Physics
 
+### 5. Collision detection for characters (hitboxes)
+* Hitboxes for characters parts
+* Bullets collision detection for hitboxes
+
+### 6. Basic Character integration with weapons and complete fps
+* Weapon Selection
+* Weapon Switch
+* Sniper weapon
+
 
 
 
