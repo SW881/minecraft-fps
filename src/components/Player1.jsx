@@ -22,6 +22,7 @@ let runAudio = new Audio('/player_walk.mp3');
 const Player1 = () => {
     const { camera } = useThree();
     const playerRef = useRef();
+    const headRef = useRef();
     const headColliderRef = useRef();
     const objectInHandRef = useRef();
     const swayingObjectRef = useRef();
@@ -31,6 +32,7 @@ const Player1 = () => {
     const rapier = useRapier();
     const [isOnFloor, setIsOnFloor] = useState(false);
     const [maxJump, setMaxJump] = useState(6);
+    const [headRotation, setHeadRotation] = useState([0, 0, 0]);
 
     useEffect(() => {
         // Set the aspect ratio once when the component is mounted
@@ -55,7 +57,7 @@ const Player1 = () => {
         }
 
         playerRef.current.wakeUp();
-        // playerRef.current.setLinvel({ x: direction.x, y: velocity.y, z: direction.z });
+        playerRef.current.setLinvel({ x: direction.x, y: velocity.y, z: direction.z });
 
         const world = rapier.world;
         const rayOrigin = playerRef.current ? playerRef.current.translation() : null;
@@ -81,7 +83,8 @@ const Player1 = () => {
         }
 
         const { x, y, z } = playerRef.current.translation();
-        state.camera.position.set(x, y, z);
+        // state.camera.position.set(x, y + 1.5, z + 1);
+        state.camera.position.set(x, y + 1.5, z + 2);
 
         if (crouch) {
             setMoveSpeed(8);
@@ -91,8 +94,14 @@ const Player1 = () => {
             setHeight(2);
         }
 
-        // objectInHandRef.current.rotation.copy(state.camera.rotation);
-        // objectInHandRef.current.position.copy(state.camera.position).add(state.camera.getWorldDirection(rotation));
+        objectInHandRef.current.rotation.copy(state.camera.rotation);
+        const cameraRotation = camera.getWorldQuaternion(new THREE.Quaternion());
+        headRef.current.setRotation(cameraRotation);
+        console.log('Collider Head rotation : ', cameraRotation);
+        objectInHandRef.current.position.copy(state.camera.position).add(state.camera.getWorldDirection(rotation));
+
+        // console.log({ cameraRotation });
+        setHeadRotation(cameraRotation);
     });
 
     const playRunSound = () => {
@@ -106,7 +115,7 @@ const Player1 = () => {
     return (
         <>
             <group>
-                <RigidBody position={[-114, 80, -18.16]} ref={playerRef} lockRotations type="dynamic" userData={{}}
+                <RigidBody position={[-114, 80, -18.16]} ref={playerRef} lockRotations={true} type="kinematic-position"
                     onCollisionEnter={(other) => {
                         if (other.rigidBodyObject.name === "ground") {
                             // console.log('Rigid Body Object :', other.rigidBodyObject)
@@ -121,17 +130,17 @@ const Player1 = () => {
                             // console.log('Not Colliding with ground...')
                         }
                     }}>
-                    <CuboidCollider args={[0.5, 0.5, 0.5]} position={[0, 1.5, 0]} />
+                    <CuboidCollider args={[0.5, 0.5, 0.5]} position={[0, 1.5, 0]} ref={headRef} />
                     <CuboidCollider args={[0.5, 0.65, 0.32]} position={[0, 0.35, 0]} />
                     <CuboidCollider args={[0.5, 0.8, 0.4]} position={[0, -1.1, 0]} />
-                    <VoxelCharacter />
+                    <VoxelCharacter hRotate={headRotation} />
                 </RigidBody>
             </group>
-            {/* <group ref={objectInHandRef}>
+            <group ref={objectInHandRef}>
                 <group ref={swayingObjectRef}>
                     <Weapon scale={0.1} />
                 </group>
-            </group> */}
+            </group>
         </>
     )
 }
