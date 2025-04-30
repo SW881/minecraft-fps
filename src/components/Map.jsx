@@ -3,7 +3,6 @@ import { Decal, useGLTF, useTexture } from '@react-three/drei'
 
 export default function Model(props) {
     const { nodes, materials } = useGLTF('/scene.gltf');
-    const texture = useTexture('/2557.jpg')
 
     return (
         <group {...props} dispose={null} scale={100}>
