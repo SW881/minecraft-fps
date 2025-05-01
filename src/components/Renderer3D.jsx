@@ -26,56 +26,13 @@ const Renderer3D = () => {
         <Stats />
         <PointerLockControls />
         <Suspense>
-
-          {/* <Physics gravity={[0, 0, 0]} debug>
-            <Player1 />
-            <Player2 />
-          </Physics> */}
-
-          {/* <Physics gravity={[0, -40, 0]} colliders={false} debug>  */}
           <Physics gravity={[0, -40, 0]} colliders={false} debug={debug}>
             <Elements />
-            {/* <VoxelCharacter /> */}
             <Player1 />
             {/* <Player2 /> */}
             <Ground />
           </Physics>
-
           <ambientLight intensity={0.5} color="0x808080" />
-
-          {/* 
-          <directionalLight
-            castShadow
-            // receiveShadow
-            intensity={5}
-            shadow={ }
-            shadow-camera-top={shadowOffset}
-            shadow-camera-bottom={-shadowOffset}
-            shadow-camera-left={shadowOffset}
-            shadow-camera-right={-shadowOffset}
-            // shadow-camera-near={0.01}
-            // shadow-camera-far={10}
-            position={[100, 150, 100]}
-            color="0xfdfbd3"
-          /> */}
-
-          {/* <directionalLight
-            castShadow
-            shadow={{
-              mapSize: { width: 4096, height: 4096 },
-              bias: -0.0001,
-              normalBias: 0.05,
-              camera: {
-                top: 200,
-                bottom: -200,
-                left: 200,
-                right: -200,
-                near: 0.1,
-                far: 500,
-              },
-            }}
-          /> */}
-
           <Environment
             background
             backgroundBlurriness={1}
