@@ -10,8 +10,10 @@ import Elements from './Elements';
 import { Bloom, DepthOfField, EffectComposer, FXAA, Noise, SSAO, Vignette } from '@react-three/postprocessing';
 import { DirectionalLightHelper } from 'three/src/Three.Core.js';
 import Player2 from './Player2';
+import VoxelCharacter from './character-components/VoxelCharacter';
 
 const shadowOffset = 250;
+let debug = true;
 
 const Renderer3D = () => {
   return (
@@ -25,14 +27,17 @@ const Renderer3D = () => {
         <PointerLockControls />
         <Suspense>
 
-          <Physics gravity={[0, 0, 0]}>
-            {/* <Player /> */}
-          </Physics>
-
-          <Physics gravity={[0, -40, 0]} colliders={false}>
-            <Elements />
-            {/* <Player1 /> */}
+          {/* <Physics gravity={[0, 0, 0]} debug>
+            <Player1 />
             <Player2 />
+          </Physics> */}
+
+          {/* <Physics gravity={[0, -40, 0]} colliders={false} debug>  */}
+          <Physics gravity={[0, -40, 0]} colliders={false} debug={debug}>
+            <Elements />
+            {/* <VoxelCharacter /> */}
+            <Player1 />
+            {/* <Player2 /> */}
             <Ground />
           </Physics>
 
@@ -74,7 +79,8 @@ const Renderer3D = () => {
           <Environment
             background
             backgroundBlurriness={1}
-            preset="night" />
+            preset="night"
+          />
         </Suspense>
         {/* <OrbitControls /> */}
       </Canvas >
