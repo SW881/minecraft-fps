@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import React, { useRef, useState } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { CuboidCollider, RigidBody } from '@react-three/rapier'
+import { RigidBody } from '@react-three/rapier'
 
 const sphere = new THREE.SphereGeometry(0.5, 16, 8);
 const sunSphere = new THREE.SphereGeometry(20, 32, 20);
@@ -10,14 +10,15 @@ const sunSphere = new THREE.SphereGeometry(20, 32, 20);
 
 let light1 = new THREE.PointLight(0xffa500, 800);
 light1.position.set(-10.2, 33.6, -10.2);
-// light1.castShadow = true
-// light1.add(new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color:0xffa500 })));
+light1.castShadow = true
+light1.visible=false
+light1.add(new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color:0xffa500 })));
 
 
 let light2 = new THREE.PointLight(0xffa500, 800);
 light2.position.set(-71.6, 38, 42);
-// light2.castShadow = true
-// light2.add(new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xffa500 })));
+light2.castShadow = true
+light2.add(new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xffa500 })));
 
 
 let light3 = new THREE.PointLight(0xffa500, 800);
@@ -91,34 +92,7 @@ const Elements = () => {
     scene.add(light8);
     scene.add(light9);
 
-    useFrame(() => {
-        if (boxRef) {
-            // setRotate([0, rotate[1] + 0.01, 0]);
-        }
-
-        if (hover) {
-
-        }
-    })
-
-    function checkPointer(e, status) {
-        if (status) {
-            hover(true)
-        }
-    }
-    return (
-        <RigidBody position={[-114, 200, -30]} type="dynamic" ref={boxRef} rotation={rotate} mass={10} linearDamping={0}>
-            {/* <mesh
-                onPointerOver={(e) => checkPointer(e, true)}
-                onPointerOut={(e) => checkPointer(e, false)}
-                onPointerMove={(e) => console.log('Pointer Moving')}
-            >
-                <boxGeometry args={[2, 2, 2]} />
-                <meshStandardMaterial color="red" />
-                <CuboidCollider args={[1, 1, 1]} density={10} friction={0.8} />
-            </mesh> */}
-        </RigidBody>
-    )
+    return null
 }
 
 export default Elements

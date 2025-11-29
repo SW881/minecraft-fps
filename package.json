@@ -1,6 +1,5 @@
 {
-  "name": "three-fps",
-  "private": true,
+  "name": "minecraft-fps",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
