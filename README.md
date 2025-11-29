@@ -1,5 +1,10 @@
 # Minecraft - FPS
 
+## This game is built to learn Three JS basics implementing in FPS game 
+
+## Using ReactJS with R3F and Three.js with RAPIER Physics engine
+## Use it as you need if possible give a start to the repo
+
 ### 1. Rendering Map and Player with gun models
 * Rendering Dust 2 Map
 * Rendering Gun with Player as capsule collider
@@ -19,6 +24,8 @@
 * Hitboxes for characters parts
 * Bullets collision detection for hitboxes
 
+### To start the game clone the repo and run below command
 
-
+`npm run dev
+`
 
