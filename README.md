@@ -1,5 +1,7 @@
 # Minecraft - FPS
 
+![alt text](image.png)
+
 ## This game is built to learn Three JS basics implementing in FPS game 
 
 ## Using ReactJS with R3F and Three.js with RAPIER Physics engine
